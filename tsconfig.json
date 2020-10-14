@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "lib": [
+        "es6",
+        "dom"
+    ]
+  }
+}
