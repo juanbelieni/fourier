@@ -1,0 +1,43 @@
+[author]
+name = "Juan Belieni"
+email = "juanbelieni@gmail.com"
+twitter = "juanbelieni"
+
+[project]
+title = "Fourier"
+description = "A TypeScript implementation of Fourier Series and Transform."
+screenshot = "assets/screenshot.png"
+features = [
+  "It uses the discrete Fourier transform method to calculate the circumferences properties.",
+  "It uses native math tools.",
+  "User can draw on the screen."
+]
+instalation = '''
+```bash
+# Clone
+$ git clone https://github.com/juanbelieni/fourier.git
+
+# Move to folder
+$ cd fourier
+
+# Install with NPM
+$ npm install
+# or Yarn
+$ yarn
+```
+'''
+usage = '''
+```bash
+# Run in development mode with NPM
+$ npm run dev
+# or Yarn
+$ yarn dev
+
+# Run in production mode, by building with NPM
+$ yarn run build
+# or Yarn
+$ yarn build
+# and serving
+$ npx serve -s dist
+```
+'''
