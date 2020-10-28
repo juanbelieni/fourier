@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "removeComments": true,
     "esModuleInterop": true,
-    "lib": [
-        "es6",
-        "dom"
-    ]
-  }
+  },
 }

@@ -1,38 +1,29 @@
-import { complex, Complex } from 'mathjs';
-
+import createStage from './create-stage';
 import dft from './dft';
+import Drawing from './drawing';
 import FourierSeries from './fourier-series';
 
-const drawing: Complex[] = [];
-let isDrawing = false;
+const stage = createStage();
+const drawing = new Drawing(stage);
+const fourierSeries = new FourierSeries(stage);
+let animationFrame: number;
 
-function createPoint(event: MouseEvent) {
-  if (isDrawing) {
-    drawing.push(
-      complex(
-        event.x - window.innerWidth / 2,
-        event.y - window.innerHeight / 2,
-      ),
-    );
-  }
-}
-
-document.addEventListener('mousedown', () => (isDrawing = true));
-document.addEventListener('mouseup', () => (isDrawing = false));
-document.addEventListener('mousemove', createPoint);
-
-const fourierSeries = new FourierSeries();
-
-function draw() {
+function update() {
   fourierSeries.step();
-  requestAnimationFrame(draw);
+  animationFrame = requestAnimationFrame(update);
 }
 
 document.addEventListener('keypress', (event: KeyboardEvent) => {
   if (event.key === ' ') {
-    const circumferencesData = dft(drawing);
+    cancelAnimationFrame(animationFrame);
+    const circumferencesData = dft(drawing.points);
+    drawing.cleanDrawing();
+    fourierSeries.cleanStage();
     fourierSeries.createCircumferences(circumferencesData);
-
-    draw();
+    update();
   }
+});
+
+document.addEventListener('mousedown', () => {
+  fourierSeries.cleanStage();
 });

@@ -1,5 +1,4 @@
 import Konva from 'konva';
-import { pi, cos, sin } from 'mathjs';
 
 import CircumferenceData from './circumference-data';
 
@@ -9,46 +8,21 @@ export interface Circumference extends CircumferenceData {
 }
 
 export default class FourierSeries {
-  private readonly stage: Konva.Stage;
   private readonly circumferencesLayer: Konva.Layer;
   private readonly shapeLayer: Konva.Layer;
   private shape: Konva.Line;
-  private readonly circumferences: Circumference[] = [];
-  private readonly points: number[] = [];
+  private circumferences: Circumference[] = [];
+  private points: number[] = [];
   private dt = 0.1;
   private time = 0;
 
-  constructor() {
-    this.stage = new Konva.Stage({
-      container: 'container',
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-
-    this.createBackground();
-
+  constructor(private readonly stage: Konva.Stage) {
     this.circumferencesLayer = new Konva.Layer();
     this.stage.add(this.circumferencesLayer);
 
     this.shapeLayer = new Konva.Layer();
     this.stage.add(this.shapeLayer);
     this.createShape();
-  }
-
-  private createBackground() {
-    const backgroundLayer = new Konva.Layer();
-    this.stage.add(backgroundLayer);
-
-    const background = new Konva.Rect({
-      x: 0,
-      y: 0,
-      width: this.stage.width(),
-      height: this.stage.height(),
-      fill: '#444',
-    });
-
-    backgroundLayer.add(background);
-    backgroundLayer.draw();
   }
 
   private createShape() {
@@ -117,9 +91,9 @@ export default class FourierSeries {
       radiusLine.position({ x, y });
       radiusLine.rotation(rotation);
 
-      const radRotation = (rotation * pi) / 180;
-      x += cos(radRotation) * radius;
-      y += sin(radRotation) * radius;
+      const radRotation = (rotation * Math.PI) / 180;
+      x += Math.cos(radRotation) * radius;
+      y += Math.sin(radRotation) * radius;
     }
 
     this.time += this.dt;
@@ -143,5 +117,12 @@ export default class FourierSeries {
       this.points.shift();
     }
     this.drawShape();
+  }
+
+  cleanStage() {
+    this.circumferencesLayer.removeChildren();
+    this.time = 0;
+    this.circumferences = [];
+    this.points = [];
   }
 }
